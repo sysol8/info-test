@@ -1,0 +1,38 @@
+.list {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 24rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  border-radius: 50%;
+  font-size: 1.4rem;
+  background-color: var(--pagination-color);
+  block-size: 3.2rem;
+  aspect-ratio: 1;
+
+  &:focus-visible {
+    outline: 1px solid var(--pagination-color-active);
+    outline-offset: 0.1rem;
+  }
+}
+
+.active {
+  pointer-events: none;
+  background-color: var(--pagination-color-active);
+  transform: scale(1.2);
+  font-weight: bold;
+
+  &:focus-visible {
+    outline: none;
+  }
+}

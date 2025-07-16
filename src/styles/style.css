@@ -1,0 +1,9 @@
+.app {
+  min-block-size: 100dvb;
+  min-inline-size: 320px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

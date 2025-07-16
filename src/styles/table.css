@@ -1,0 +1,42 @@
+.table-wrapper {
+  max-inline-size: 1400px;
+  inline-size: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: 1.6rem;
+  table-layout: fixed;
+}
+
+.table__heading {
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: var(--heading-cell-color);
+  border: 1px solid var(--border-color);
+  border-bottom-width: 2px;
+  position: relative;
+}
+
+.table__heading_is-sortable {
+  cursor: pointer;
+}
+
+.table__cell {
+  background-color: var(--cell-color);
+  font-size: 1.4rem;
+  border: 1px solid var(--border-color)
+}
+
+.table__heading,
+.table__cell {
+  padding-block: 0.8rem;
+  padding-inline: 1.2rem;
+  text-align: left;
+  min-inline-size: 5rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
