@@ -5,17 +5,18 @@ import { useUsers } from '../../hooks/useUsers.js';
 import { useState } from 'react';
 import Pagination from '../Pagination/Pagination.jsx';
 import Popup from '../Popup/Popup.jsx';
+import Filter from '../Filter/Filter.jsx';
 
 const columns = [
-  { key: 'lastName', label: 'Фамилия', sortable: true },
-  { key: 'firstName', label: 'Имя', sortable: true },
-  { key: 'maidenName', label: 'Отчество', sortable: true },
-  { key: 'age', label: 'Возраст', sortable: true },
-  { key: 'gender', label: 'Пол', sortable: true },
-  { key: 'phone', label: 'Номер телефона', sortable: true },
-  { key: 'email', label: 'Email', sortable: false },
-  { key: 'address.country', label: 'Страна', sortable: false },
-  { key: 'address.city', label: 'Город', sortable: false },
+  { key: 'lastName', label: 'Фамилия', sortable: true, filterable: true },
+  { key: 'firstName', label: 'Имя', sortable: true, filterable: true },
+  { key: 'maidenName', label: 'Отчество', sortable: true, filterable: true },
+  { key: 'age', label: 'Возраст', sortable: true, filterable: true },
+  { key: 'gender', label: 'Пол', sortable: true, filterable: true },
+  { key: 'phone', label: 'Номер телефона', sortable: true, filterable: true },
+  { key: 'email', label: 'Email', sortable: false, filterable: false },
+  { key: 'address.country', label: 'Страна', sortable: false, filterable: false },
+  { key: 'address.city', label: 'Город', sortable: false, filterable: false },
 ];
 
 function Table() {
@@ -25,6 +26,15 @@ function Table() {
 
   const [sortBy, setSortBy] = useState(null);
   const [order, setOrder] = useState('asc');
+
+  const [filterKey, setFilterKey] = useState(null);
+  const [filterValue, setFilterValue] = useState('');
+
+  const handleFilter = (key, value) => {
+    setFilterKey(key);
+    setFilterValue(value);
+    setPage(1);
+  };
 
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -36,11 +46,13 @@ function Table() {
     setSelectedUser(null);
   };
 
-  const { users, totalItems } = useUsers({
+  const { users, totalItems, loading, error } = useUsers({
     limit: ITEMS_PER_PAGE,
     skip: pagesToSkip,
     sortBy: sortBy,
     order: order,
+    filterKey: filterKey,
+    filterValue: filterValue,
   });
 
   const handleSort = (columnKey) => {
@@ -55,30 +67,44 @@ function Table() {
     setPage(1);
   };
 
-  return (
-    <div className="table-wrapper">
-      <table className="table">
-        <TableHeader
-          columns={columns}
-          sortBy={sortBy}
-          order={order}
-          onSort={handleSort}
-        ></TableHeader>
-        <TableBody
-          columns={columns}
-          data={users.users}
-          onRowClick={handleRowClick}
-        ></TableBody>
-      </table>
-      <Pagination
-        totalItems={totalItems}
-        itemsPerPage={ITEMS_PER_PAGE}
-        currentPage={page}
-        onPageSelect={setPage}
-      ></Pagination>
+  if (loading) return <p className="message">Загрузка...</p>;
+  if (error) return <p className="message">{error.message}</p>;
+  if (totalItems === 0) return (
+    <>
+      <Filter columns={columns.filter(column => column.filterable)} onFilter={handleFilter} />
+      <p className="message">Нет результатов по установленному фильтру <br />
+        Для отображения таблицы нажмите "Применить" или обновите страницу.
+      </p>
+    </>
+  )
 
-      {selectedUser && <Popup user={selectedUser} onClose={closeModal} />}
-    </div>
+  return (
+    <>
+      <Filter columns={columns.filter(column => column.filterable)} onFilter={handleFilter} />
+      <div className="table-wrapper">
+        <table className="table">
+          <TableHeader
+            columns={columns}
+            sortBy={sortBy}
+            order={order}
+            onSort={handleSort}
+          ></TableHeader>
+          <TableBody
+            columns={columns}
+            data={users.users}
+            onRowClick={handleRowClick}
+          ></TableBody>
+        </table>
+        <Pagination
+          totalItems={totalItems}
+          itemsPerPage={ITEMS_PER_PAGE}
+          currentPage={page}
+          onPageSelect={setPage}
+        ></Pagination>
+
+        {selectedUser && <Popup user={selectedUser} onClose={closeModal} />}
+      </div>
+    </>
   );
 }
 
