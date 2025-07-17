@@ -8,7 +8,7 @@
   inline-size: 100%;
   border-collapse: collapse;
   font-size: 1.6rem;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .table__heading {
@@ -24,10 +24,16 @@
   cursor: pointer;
 }
 
+.table__row:hover .table__cell {
+  background-color: var(--pagination-color-active);
+  cursor: pointer;
+}
+
 .table__cell {
   background-color: var(--cell-color);
   font-size: 1.4rem;
-  border: 1px solid var(--border-color)
+  border: 1px solid var(--border-color);
+  min-inline-size: 5rem;
 }
 
 .table__heading,

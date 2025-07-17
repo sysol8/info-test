@@ -4,6 +4,7 @@ import TableBody from './TableBody.jsx';
 import { useUsers } from '../../hooks/useUsers.js';
 import { useState } from 'react';
 import Pagination from '../Pagination/Pagination.jsx';
+import Popup from '../Popup/Popup.jsx';
 
 const columns = [
   { key: 'lastName', label: 'Фамилия', sortable: true },
@@ -24,6 +25,16 @@ function Table() {
 
   const [sortBy, setSortBy] = useState(null);
   const [order, setOrder] = useState('asc');
+
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const handleRowClick = (user) => {
+    setSelectedUser(user);
+  };
+
+  const closeModal = () => {
+    setSelectedUser(null);
+  };
 
   const { users, totalItems } = useUsers({
     limit: ITEMS_PER_PAGE,
@@ -53,7 +64,11 @@ function Table() {
           order={order}
           onSort={handleSort}
         ></TableHeader>
-        <TableBody columns={columns} data={users.users}></TableBody>
+        <TableBody
+          columns={columns}
+          data={users.users}
+          onRowClick={handleRowClick}
+        ></TableBody>
       </table>
       <Pagination
         totalItems={totalItems}
@@ -61,6 +76,8 @@ function Table() {
         currentPage={page}
         onPageSelect={setPage}
       ></Pagination>
+
+      {selectedUser && <Popup user={selectedUser} onClose={closeModal} />}
     </div>
   );
 }

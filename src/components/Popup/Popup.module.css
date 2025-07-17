@@ -1,0 +1,56 @@
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  block-size: 100dvb;
+  inline-size: 100dvi;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper {
+  position: relative;
+  background-color: var(--background-color);
+  padding-inline: 1.2rem;
+  padding-block: 0.8rem;
+  border-radius: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.close {
+  font-size: 1.6rem;
+  position: absolute;
+  right: 0.8rem;
+  top: 0.8rem;
+}
+
+.title {
+  font-size: 1.8rem;
+}
+
+.heading {
+  font-size: 1.6rem;
+}
+
+.avatar {
+  block-size: 6.4rem;
+  inline-size: 6.4rem;
+}
+
+.text {
+  font-size: 1.4rem;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+  font-style: normal;
+}
+
+.link {
+  font-size: 1.4rem;
+}
