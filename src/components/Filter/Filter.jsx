@@ -1,45 +1,54 @@
-import { useState } from 'react';
+import styles from './Filter.module.css'
+import { useState } from 'react'
 
 function Filter({ columns, onFilter }) {
-  const [fieldKey, setFieldKey] = useState(columns.length > 0 ? columns[0].key : '');
+  const [fieldKey, setFieldKey] = useState(
+    columns.length > 0 ? columns[0].key : '',
+  );
   const [value, setValue] = useState('');
 
-  const currentColumn = columns.find(column => column.key === fieldKey);
+  const currentColumn = columns.find((column) => column.key === fieldKey);
 
   const handleFieldChange = (e) => {
     setFieldKey(e.target.value);
-    setValue('')
-  }
+    setValue('');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onFilter(fieldKey, value);
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <select value={fieldKey} onChange={handleFieldChange}>
-        {columns.map(column => (
-          <option key={column.key} value={column.key}>{column.label}</option>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <select className={styles.selectMain} value={fieldKey} onChange={handleFieldChange}>
+        {columns.map((column) => (
+          <option key={column.key} value={column.key}>
+            {column.label}
+          </option>
         ))}
       </select>
-      {currentColumn.type === 'select' && Array.isArray(currentColumn.options) ? (
-        <select value={value} onChange={(e) => setValue(e.target.value)}>
-          <option value="">312312</option>
-          {currentColumn.options.map(option => (
-            <option key={option.key} value={option.key}>{option.label}</option>
+      {currentColumn.type === 'select' &&
+      Array.isArray(currentColumn.options) ? (
+        <select className={styles.selectSecondary} value={value} onChange={(e) => setValue(e.target.value)}>
+          <option value="" unselectable={"on"}>-выберите-</option>
+          {currentColumn.options.map((option) => (
+            <option key={option.key} value={option.key}>
+              {option.label}
+            </option>
           ))}
         </select>
       ) : (
         <input
+          className={styles.input}
           type={currentColumn.type === 'number' ? 'number' : 'text'}
-          placeholder={`Введите ${currentColumn.label.toLowerCase()}`}
+          placeholder={`${currentColumn.label.toLowerCase()}`}
           value={value}
-          onChange={e => setValue(e.target.value)}
+          onChange={(e) => setValue(e.target.value)}
         />
       )}
 
-      <button type="submit">Применить</button>
+      <button className={styles.button} type="submit">Применить</button>
     </form>
   );
 }

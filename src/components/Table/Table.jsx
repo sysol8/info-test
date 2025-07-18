@@ -8,15 +8,15 @@ import Popup from '../Popup/Popup.jsx';
 import Filter from '../Filter/Filter.jsx';
 
 const columns = [
-  { key: 'lastName', label: 'Фамилия', sortable: true, filterable: true },
-  { key: 'firstName', label: 'Имя', sortable: true, filterable: true },
-  { key: 'maidenName', label: 'Отчество', sortable: true, filterable: true },
-  { key: 'age', label: 'Возраст', sortable: true, filterable: true },
-  { key: 'gender', label: 'Пол', sortable: true, filterable: true },
-  { key: 'phone', label: 'Номер телефона', sortable: true, filterable: true },
-  { key: 'email', label: 'Email', sortable: false, filterable: false },
-  { key: 'address.country', label: 'Страна', sortable: false, filterable: false },
-  { key: 'address.city', label: 'Город', sortable: false, filterable: false },
+  { key: 'lastName', label: 'Фамилия', sortable: true, filterable: true, type: 'text' },
+  { key: 'firstName', label: 'Имя', sortable: true, filterable: true, type: 'text' },
+  { key: 'maidenName', label: 'Отчество', sortable: true, filterable: true, type: 'text' },
+  { key: 'age', label: 'Возраст', sortable: true, filterable: true, type: 'number' },
+  { key: 'gender', label: 'Пол', sortable: true, filterable: true, type: 'select', options: [ { key: 'male', label: 'Мужской' }, { key: 'female', label: 'Женский' } ] },
+  { key: 'phone', label: 'Номер телефона', sortable: true, filterable: true, type: 'tel' },
+  { key: 'email', label: 'Email', sortable: false, filterable: false, type: 'email' },
+  { key: 'address.country', label: 'Страна', sortable: false, filterable: false, type: 'text' },
+  { key: 'address.city', label: 'Город', sortable: false, filterable: false, type: 'text' },
 ];
 
 function Table() {
@@ -69,18 +69,26 @@ function Table() {
 
   if (loading) return <p className="message">Загрузка...</p>;
   if (error) return <p className="message">{error.message}</p>;
-  if (totalItems === 0) return (
-    <>
-      <Filter columns={columns.filter(column => column.filterable)} onFilter={handleFilter} />
-      <p className="message">Нет результатов по установленному фильтру <br />
-        Для отображения таблицы нажмите "Применить" или обновите страницу.
-      </p>
-    </>
-  )
+  if (totalItems === 0)
+    return (
+      <>
+        <Filter
+          columns={columns.filter((column) => column.filterable)}
+          onFilter={handleFilter}
+        />
+        <p className="message">
+          Нет результатов по установленному фильтру <br />
+          Для отображения таблицы нажмите "Применить" или обновите страницу.
+        </p>
+      </>
+    );
 
   return (
     <>
-      <Filter columns={columns.filter(column => column.filterable)} onFilter={handleFilter} />
+      <Filter
+        columns={columns.filter((column) => column.filterable)}
+        onFilter={handleFilter}
+      />
       <div className="table-wrapper">
         <table className="table">
           <TableHeader

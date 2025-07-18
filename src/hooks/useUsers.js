@@ -1,5 +1,6 @@
 import { getUsers } from '../api/users.js';
 import { useState, useEffect, useRef } from 'react';
+import { getNestedValue } from '../utils/utils.js';
 
 function useUsers({ limit, skip, sortBy, order, filterKey, filterValue }) {
   const [users, setUsers] = useState([]);

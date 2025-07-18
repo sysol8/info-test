@@ -1,9 +1,14 @@
 const BASE_URL = 'https://dummyjson.com';
 
-export const getUsers = async ({ limit, skip, sortBy = null, order = 'asc', filterKey = null, filterValue = null }) => {
-  const endpoint = filterKey && filterValue
-    ? '/users/filter'
-    : '/users';
+export const getUsers = async ({
+  limit,
+  skip,
+  sortBy = null,
+  order = 'asc',
+  filterKey = null,
+  filterValue = null,
+}) => {
+  const endpoint = filterKey && filterValue ? '/users/filter' : '/users';
 
   const params = new URLSearchParams({
     limit: String(limit),

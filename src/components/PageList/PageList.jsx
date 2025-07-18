@@ -75,26 +75,6 @@ function PageList({
       })}
     </ul>
   );
-
-  /*return (
-    <ul className={styles.list}>
-      {Array.from({ length: totalPages }, (_, index) => {
-        const pageNumber = index + 1;
-        const isActive = pageNumber === currentPage;
-        return (
-          <li className={styles.item} key={pageNumber}>
-            <button
-              className={`${styles.button} ${isActive ? styles.active : ''}`}
-              onClick={() => onPageSelect(pageNumber)}
-              disabled={isActive}
-            >
-              {pageNumber}
-            </button>
-          </li>
-        );
-      })}
-    </ul>
-  );*/
 }
 
 export default PageList;

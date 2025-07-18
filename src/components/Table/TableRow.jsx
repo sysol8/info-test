@@ -1,5 +1,4 @@
-const getNestedValue = (object, path) =>
-  path.split('.').reduce((current, key) => current?.[key], object);
+import { getNestedValue } from '../../utils/utils.js';
 
 function TableRow({ columns, item, onClick }) {
   return (

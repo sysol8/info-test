@@ -1,0 +1,28 @@
+.form {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  background-color: var(--pagination-color);
+  border-radius: 0.8rem;
+  font-size: 1.6rem;
+  padding-inline: 0.4rem;
+  padding-block: 0.4rem;
+}
+
+.selectMain {
+  font-size: inherit;
+  border-radius: 0.4rem;
+  border: 1px solid var(--border-color);
+  padding-block: 0.2rem;
+}
+
+.selectSecondary {
+  font-size: inherit;
+  border-radius: 0.4rem;
+  border: 2px solid var(--pagination-color-active)
+}
+
+.input {
+  border-bottom: 1px solid var(--border-color);
+}
+
